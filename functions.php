@@ -56,25 +56,6 @@ if ( !current_theme_supports('post-thumbnails')) {
 
 add_action('init', 'sc_register_project');
 
-if ( function_exists('register_sidebar') ) {
-	register_sidebar(array(
-	  'name' => 'Sidebar',
-	  'description' => __('Widgets in this area will be shown on the right-hand side.'),
-	  'before_widget' => '<section><div>',
-	  'after_widget' => '</div></section>',
-	  'before_title' => '<h2>',
-	  'after_title' => '</h2>'
-	));
-	register_sidebar(array(
-	  'name' => 'Footer',
-	  'description' => __('Widgets in this area will be shown in the footer.'),
-	  'before_widget' => '	<div class="widget column grid_4"><div class="inner">',
-	  'after_widget' => '</div></div>',
-	  'before_title' => '<h2>',
-	  'after_title' => '</h2>'
-	));
-}
-
 function sc_register_project() {
 	$args = array(
 		'label' => __('Projects'),
@@ -102,13 +83,13 @@ function sc_admin_init() {
 function sc_meta_options() {
 	global $post;
 	$custom = get_post_custom($post->ID);
-	if(isset($custom['project_url'][0])) $project_url = $custom['project_url'][0];
-	if(isset($custom['client_name'][0])) $client_name = $custom['client_name'][0];
-	if(isset($custom['post_mantle'][0])) $post_mantle = $custom['post_mantle'][0];
+	$project_url = (isset($custom['project_url'][0]) ? $custom['project_url'][0] : '');
+	$project_url = (isset($custom['client_name'][0]) ? $custom['client_name'][0] : '');
+	$project_url = (isset($custom['post_mantle'][0]) ? $custom['post_mantle'][0] : '');
 	?>
 	<p>
 	<label>Client Name:</label><br>
-	<input type="text" name="client_name"<?php if($client_name): echo " value=\"$client_name\""; endif; ?> style="width: 98%"></p>
+	<input type="text" name="client_name"<?php if(isset($client_name)): echo " value=\"$client_name\""; endif; ?> style="width: 98%"></p>
 	<?php /* <p>
 	<label>Project URL:</label><br>
 	<input type="text" name="project_url"<?php if($project_url): echo " value=\"$project_url\""; endif; ?> style="width: 98%"></p> */?>
@@ -131,7 +112,7 @@ function sc_meta_options() {
 function sc_post_mantle() {
 	global $post;
 	$custom = get_post_custom($post->ID);
-	$post_mantle = $custom['post_mantle'][0];
+	$post_mantle = (isset($custom['post_mantle'][0]) ? $custom['post_mantle'][0] : '');
 	?>
 	<textarea id="post-mantle-text" name="post_mantle" onKeyUp="updateMantleLimit()" style="height: 4em; margin: 0px; width: 98%;"><?php if(isset($post_mantle)) { echo $post_mantle; } ?></textarea>
 	<p>This text appears above the post. Useful for important passages or quotes. (limit <span id="post-mantle-limit">130</span> characters)</p>

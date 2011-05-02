@@ -1,11 +1,11 @@
 <?php
 
 /**
- * TweetWidget Class
+ * ScTweetWidget Class
  */
-class TweetWidget extends WP_Widget {
+class ScTweetWidget extends WP_Widget {
     /** constructor */
-    function TweetWidget() {
+    function ScTweetWidget() {
         parent::WP_Widget(false, $name = 'Recent Tweets');
     }
 
@@ -71,11 +71,11 @@ jQuery.getJSON('http://twitter.com/statuses/user_timeline/<?php echo $username; 
 } // class TweetWidget
 
 /**
- * ShowcaseFollow Class
+ * ScFollow Class
  */
-class ShowcaseFollow extends WP_Widget {
+class ScFollow extends WP_Widget {
     /** constructor */
-    function ShowcaseFollow() {
+    function ScFollow() {
         parent::WP_Widget(false, $name = 'Social Links');
     }
 
@@ -149,6 +149,26 @@ class ShowcaseFollow extends WP_Widget {
 
 } //class ShowcaseFollow
 
-// register Showcase widgets
-add_action('widgets_init', create_function('', 'return register_widget("TweetWidget");'));
-add_action('widgets_init', create_function('', 'return register_widget("ShowcaseFollow");'));
+// register Showcase widgets and sidebars
+add_action('widgets_init', 'sc_register_sidebars');
+add_action('widgets_init', create_function('', 'return register_widget("ScTweetWidget");'));
+add_action('widgets_init', create_function('', 'return register_widget("ScFollow");'));
+
+function sc_register_sidebars() {
+	register_sidebar(array(
+	  'name' => 'Sidebar',
+	  'description' => __('Widgets in this area will be shown on the right-hand side.'),
+	  'before_widget' => '<section><div>',
+	  'after_widget' => '</div></section>',
+	  'before_title' => '<h2>',
+	  'after_title' => '</h2>'
+	));
+	register_sidebar(array(
+	  'name' => 'Footer',
+	  'description' => __('Widgets in this area will be shown in the footer.'),
+	  'before_widget' => '	<div class="widget column grid_4"><div class="inner">',
+	  'after_widget' => '</div></div>',
+	  'before_title' => '<h2>',
+	  'after_title' => '</h2>'
+	));
+}

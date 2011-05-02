@@ -4,10 +4,12 @@
 		<title><?php bloginfo('name'); ?></title>
     <meta charset="utf-8">
 		<?php global $is_IE; ?>
-    <?php if($is_IE): ?>
-  		<script>
+		<?php if ($is_IE): ?>
+    <!--[if lt IE7]>
+  		<script language="Javascript" type="text/javascript">
   			DD_belatedPNG.fix('.png, #mantle-dots li');
   		</script>
+  	<!--[endif]-->
 	  <?php endif; ?>
 	  <?php if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?><!-- comment-reply -->
 		<?php wp_head(); ?>

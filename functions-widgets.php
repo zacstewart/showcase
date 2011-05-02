@@ -3,9 +3,9 @@
 /**
  * ScTweetWidget Class
  */
-class ScTweetWidget extends WP_Widget {
+class Sc_TweetWidget extends WP_Widget {
     /** constructor */
-    function ScTweetWidget() {
+    function Sc_TweetWidget() {
         parent::WP_Widget(false, $name = 'Recent Tweets');
     }
 
@@ -21,24 +21,26 @@ class ScTweetWidget extends WP_Widget {
 <div id="sc-tweets" class="tweets">
 </div>
 <script language="Javascript">
-function parseTwitterDate(text) {
+function sc_parseTwitterDate(text) {
     var newtext = text.replace(/(\+\S+) (.*)/, '$2 $1')
     var date = new Date(Date.parse(newtext)).toJSON();
     date = date.substring(0, date.length-5);
     date = date + "Z";
-    return date ;
+    return date; 
 }
 $("#sc-tweets").hide();
 jQuery.getJSON('http://twitter.com/statuses/user_timeline/<?php echo $username; ?>.json?count=3&callback=?', function( data ) {
 	$.each(data, function(i, item) {
-
-
-
+    if (prettyDate(sc_parseTwitterDate(item.created_at)) == undefined) {
+      var date = item.created_at;
+    } else {
+      var date = prettyDate(sc_parseTwitterDate(item.created_at));
+    }
 		$("#sc-tweets").append('<article><div class="tweet"><div class="body"><a href="http://twitter.com/' + item.user.screen_name + '/status/' + item.id_str + '">'
 			+ item.text
 			+ '</a>'
 			+ '</div><div class="footer">'
-			+ prettyDate(parseTwitterDate(item.created_at))
+			+ date
       // + 2011-02-17T15:23:41Z
 			+ '</div></div></article>');
 	});
@@ -73,9 +75,9 @@ jQuery.getJSON('http://twitter.com/statuses/user_timeline/<?php echo $username; 
 /**
  * ScFollow Class
  */
-class ScFollow extends WP_Widget {
+class Sc_Follow extends WP_Widget {
     /** constructor */
-    function ScFollow() {
+    function Sc_Follow() {
         parent::WP_Widget(false, $name = 'Social Links');
     }
 
@@ -151,8 +153,8 @@ class ScFollow extends WP_Widget {
 
 // register Showcase widgets and sidebars
 add_action('widgets_init', 'sc_register_sidebars');
-add_action('widgets_init', create_function('', 'return register_widget("ScTweetWidget");'));
-add_action('widgets_init', create_function('', 'return register_widget("ScFollow");'));
+add_action('widgets_init', create_function('', 'return register_widget("Sc_TweetWidget");'));
+add_action('widgets_init', create_function('', 'return register_widget("Sc_Follow");'));
 
 function sc_register_sidebars() {
 	register_sidebar(array(

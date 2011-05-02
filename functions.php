@@ -51,7 +51,7 @@ if ( $is_IE ) {
 add_theme_support('automatic-feed-links');
 
 if ( !current_theme_supports('post-thumbnails')) {
-	add_theme_support( 'post-thumbnails', array( 'project' ) ); // Add it for pages
+	add_theme_support( 'post-thumbnails', array( 'project' ) ); // Add it for projects
 }
 
 add_action('init', 'sc_register_project');
@@ -95,16 +95,16 @@ function sc_meta_options() {
 	<input type="text" name="project_url"<?php if($project_url): echo " value=\"$project_url\""; endif; ?> style="width: 98%"></p> */?>
 	<p>
 	<label>Project Mantle:</label><br>
-	<textarea id="post-mantle-text" name="post_mantle" onKeyUp="updateMantleLimit()" style="height: 4em; margin: 0px; width: 98%;"><?php if(isset($post_mantle)) { echo $post_mantle; } ?></textarea>
+	<textarea id="post-mantle-text" name="post_mantle" onKeyUp="sc_updateMantleLimit()" style="height: 4em; margin: 0px; width: 98%;"><?php if(isset($post_mantle)) { echo $post_mantle; } ?></textarea>
 	</p>
 	<p>This text appears above the post. Useful for important passages or quotes. (limit <span id="post-mantle-limit">130</span> characters)</p>
 	<script>
-	function updateMantleLimit() {
+	function sc_updateMantleLimit() {
 		len = document.getElementById('post-mantle-text').value.length;
 		remaining = document.getElementById('post-mantle-limit');
 		remaining.innerHTML=(130-len);
 	}
-	updateMantleLimit();
+	sc_updateMantleLimit();
 	</script>
 	<?php
 }
@@ -114,15 +114,15 @@ function sc_post_mantle() {
 	$custom = get_post_custom($post->ID);
 	$post_mantle = (isset($custom['post_mantle'][0]) ? $custom['post_mantle'][0] : '');
 	?>
-	<textarea id="post-mantle-text" name="post_mantle" onKeyUp="updateMantleLimit()" style="height: 4em; margin: 0px; width: 98%;"><?php if(isset($post_mantle)) { echo $post_mantle; } ?></textarea>
+	<textarea id="post-mantle-text" name="post_mantle" onKeyUp="sc_updateMantleLimit()" style="height: 4em; margin: 0px; width: 98%;"><?php if(isset($post_mantle)) { echo $post_mantle; } ?></textarea>
 	<p>This text appears above the post. Useful for important passages or quotes. (limit <span id="post-mantle-limit">130</span> characters)</p>
 	<script>
-	function updateMantleLimit() {
+	function sc_updateMantleLimit() {
 		len = document.getElementById('post-mantle-text').value.length;
 		remaining = document.getElementById('post-mantle-limit');
 		remaining.innerHTML=(130-len);
 	}
-	updateMantleLimit();
+	sc_updateMantleLimit();
 	</script>
 	<?php
 }
@@ -188,7 +188,7 @@ if ( ! function_exists( 'sc_comment' ) ) {
 		<li <?php comment_class('row'); ?> id="li-comment-<?php comment_ID(); ?>">
 			<article>
 				<div id="comment-<?php comment_ID(); ?>" class="comment grid_8 row">
-					<div class="grid_1 column avatar">
+					<div class="grid_1 column picture">
 						<?php echo get_avatar( $comment, 60 ); ?>
 					</div>
 					<div class="grid_7 column content">

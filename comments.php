@@ -104,6 +104,7 @@
 		<?php endif; ?>
 		<div class="row">
 	  <?php if ( have_comments() ) : ?>
+	    <div class="column grid_8">
 				<h3 id="comments-title"><?php
 				printf( _n( 'One Response to %2$s', '%1$s Responses to %2$s', get_comments_number(), 'showcase' ),
 				number_format_i18n( get_comments_number() ), get_the_title() );
@@ -160,6 +161,7 @@
 					</div><!-- .navigation -->
 		<?php endif; // check for comment navigation ?>
       </ol>
+      </div>
       </div>
 		<?php else : // or, if we don't have comments:?>
       </ol>

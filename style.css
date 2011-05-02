@@ -596,6 +596,8 @@ body.search #content .meta h3.title {
 h3#comments-title {
 	margin-bottom: 10px;
 }
+#comments {
+}
 #comments #comment-list {
 	list-style: none;
 }
@@ -659,58 +661,64 @@ h3#comments-title {
 #comments .comment .body p {
 	margin: 10px 0 0 0;
 }
+#comments .comment .children #respond {
+  margin-left: 10px;
+}
 #comments .comment ul.children .row .row {
   margin: 0;
 }
-#comments .comment .depth-2 .avatar {
+#comments .comment {
+  width: 660px;
+}
+#comments .comment .depth-2 .picture {
   margin: 0 20px 0 10px;
 }
 #comments .comment .depth-2 .content {
   width: 530px;
 }
-#comments .comment .depth-3 .avatar {
+#comments .comment .depth-3 .picture {
 margin: 0 30px 0 20px;
 }
 #comments .comment .depth-3 .content {
   width: 510px;
 }
-#comments .comment .depth-4 .avatar {
+#comments .comment .depth-4 .picture {
 margin: 0 40px 0 30px;
 }
 #comments .comment .depth-4 .content {
   width: 490px;
 }
-#comments .comment .depth-5 .avatar {
+#comments .comment .depth-5 .picture {
   margin: 0 50px 0 40px;
 }
 #comments .comment .depth-5 .content {
   width: 470px;
 }
-#comments .comment .depth-6 .avatar {
+#comments .comment .depth-6 .picture {
   margin: 0 60px 0 50px;
 }
 #comments .comment .depth-6 .content {
   width: 450px;
 }
-#comments .comment .depth-7 .avatar {
+#comments .comment .depth-7 .picture {
   margin: 0 70px 0 60px;
 }
 #comments .comment .depth-7 .content {
   width: 430px;
 }
-#comments .comment .depth-8 .avatar {
+#comments .comment .depth-8 .picture {
   margin: 0 80px 0 70px;
 }
 #comments .comment .depth-8 .content {
   width: 410px;
 }
-#comments .comment .depth-9 .avatar {
+#comments .comment .depth-9 .picture {
   margin: 0 90px 0 80px;
 }
 #comments .comment .depth-9 .content {
   width: 390px;
 }
-#comments .comment .depth-10 .avatar {
+#comments .comment .depth-10 .picture {
   margin: 0 100px 0 90px;
 }
 #comments .comment .depth-10 .content {

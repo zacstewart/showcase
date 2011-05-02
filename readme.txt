@@ -21,6 +21,10 @@ Sidebar & Footer
 ----------------
 The sidebar and footer both support widgets. Update your them as usual with Appearence > Widgets, and drag the widget you would like to your sidebar.
 
+Main Menu
+---------
+Top Menu is the name of the menu next to the blog name. The menu is best utilized by no more than five or six links, although it will support more.
+
 Contact Form shortcode
 ----------------------
 

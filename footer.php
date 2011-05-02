@@ -24,7 +24,6 @@
 			</div>
 	  </div>
 	</footer>
-	<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
 	<script>
 	$(function() {
 		screens = $("#computer .screen");

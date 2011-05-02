@@ -5,7 +5,9 @@ $shortname = 'sc';
 require_once("functions-admin.php");
 require_once("functions-widgets.php");
 
-// Helpers
+/**
+ * Helpers
+ */
 function sc_string_limit_chars($string, $char_limit) {
 	return substr($string,0,$char_limit);
 }
@@ -16,7 +18,35 @@ function sc_string_limit_words($string, $word_limit) {
   return implode(' ', $words);
 }
 
+/**
+ * This is for loading IE-only stylesheets
+ */
+function sc_enqueue_style($handle, $src, $conditions)
+{
+    global $wp_styles;
+    wp_enqueue_style($handle, $src);
+    if(isset($conditions)) {
+      $wp_styles->add_data($handle, 'conditional', $conditions);
+    }
+}
+
 if ( ! isset( $content_width ) ) $content_width = 960;
+
+/**
+ * Load assets
+ */
+wp_enqueue_style( 'showcase', get_bloginfo( 'stylesheet_url' ) );
+wp_enqueue_style( 'font-titillium', get_template_directory_uri() . '/fonts/titillium/stylesheet.css' );
+wp_enqueue_style( 'font-leaguegothic', get_template_directory_uri() . '/fonts/leaguegothic/stylesheet.css' );
+sc_enqueue_style( 'ie6', get_template_directory_uri() . '/ie6.css', 'IE 6' );
+sc_enqueue_style( 'ie7', get_template_directory_uri() . '/ie7.css', 'lt IE 8' );
+wp_enqueue_script( 'jquery', get_template_directory_uri() . "/js/jquery-1.4.4.min.js", null, '1.4.4', false );
+wp_enqueue_script( 'md5', get_template_directory_uri() . "/js/md5.js", null, null, false );
+wp_enqueue_script( 'prettyjs', get_template_directory_uri() . "/js/pretty.js", null, null, false );
+wp_enqueue_script( 'jquery.tools', "http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js", null, null, false );
+if ( $is_IE ) {
+ wp_enqueue_script( 'DD_belatedPNG', get_template_directory_uri() . "/js/DD_belatedPNG.js", null, null, false ); 
+}
 
 add_theme_support('automatic-feed-links');
 
@@ -168,8 +198,8 @@ if ( function_exists( 'register_nav_menu' ) ) {
 	register_nav_menu( 'top-menu', 'Top Menu' );
 }
 
-if ( ! function_exists( 'partial_comment' ) ) {
-	function partial_comment( $comment, $args, $depth ) {
+if ( ! function_exists( 'sc_comment' ) ) {
+	function sc_comment( $comment, $args, $depth ) {
 		$GLOBALS['comment'] = $comment;
 		switch ( $comment->comment_type ) :
 			case '' :
@@ -177,17 +207,18 @@ if ( ! function_exists( 'partial_comment' ) ) {
 		<li <?php comment_class('row'); ?> id="li-comment-<?php comment_ID(); ?>">
 			<article>
 				<div id="comment-<?php comment_ID(); ?>" class="comment grid_8 row">
-					<div class="grid_1 column">
+					<div class="grid_1 column avatar">
 						<?php echo get_avatar( $comment, 60 ); ?>
 					</div>
-					<div class="grid_7 column">
+					<div class="grid_7 column content">
 						<header>
 							<div class="header">
 								<h3><?php printf( __( '%s', 'showcase' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?> |</h3>
 								<div class="meta">
 									<date datetime="<?php comment_time('c'); ?>">
-										<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'showcase' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'showcase' ), ' ' ); ?>
+										<a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s at %2$s', 'showcase' ), get_comment_date(),  get_comment_time() ); ?></a>
 									</date>
+									<?php edit_comment_link( __( '(Edit)', 'showcase' ), ' ' ); ?>
 								</div>
 								<?php if ( $comment->comment_approved == '0' ) : ?>
 									<div><em><?php _e( 'Your comment is awaiting moderation.', 'showcase' ); ?></em></div>
@@ -198,7 +229,7 @@ if ( ! function_exists( 'partial_comment' ) ) {
 							<?php comment_text(); ?>
 						</div>
 						<footer>
-							<div class="right"><?php comment_reply_link(); ?></div>
+							<div class="right"><?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ; ?></div>
 						</footer>
 					</div>
 					<div class="clear"></div>
@@ -315,7 +346,7 @@ function sc_return_contact_form($invalid = array(), $error_message = null, $cont
 				<textarea name="sc_contact_message" class="grid_5 {$valid['message']}">{$sc_contact_message}</textarea>
 			</div>
 			<div class="grid_8 column">
-				<input type="image" src="$submit" name="sc_contact_send" value=="Send">
+				<input type="image" src="$submit" name="sc_contact_send" value="Send">
 			</div>
 		</form>
 EOT;
@@ -350,4 +381,3 @@ function sc_contact_form($atts, $content = null) {
 	}
 };
 add_shortcode('contact form', 'sc_contact_form');
-?>

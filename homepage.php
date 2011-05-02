@@ -111,7 +111,7 @@ if ($default_portfolio_term) {
 											</div>
 										</date>
 										<div class="column grid_7">
-											<div class="title"><h3 class="title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3></div>
+											<div class="title"><h3 class="title"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a></h3></div>
 											<div class="author">Posted by <?php the_author(); ?> on <date datetime="<?php the_time('c'); ?>" title="<?php the_time("F jS, o"); ?>"><?php the_time("F jS, o"); ?> at <?php the_time("g:i a"); ?></date></div>
 											<div class="tags">
 												<?php the_tags("<ul>\n<li>", "</li>\n<li>", "</li>\n</ul>"); ?>

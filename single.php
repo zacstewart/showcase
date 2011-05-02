@@ -75,7 +75,6 @@
 									<div class="row meta">
 										<div class="column grid_8">
 											<div class="title"><h3 class="title">Not Found</h3></div>
-											<div class="author">Posted by <?php the_author(); ?> on <date datetime="<?php the_time('c'); ?>" title="<?php the_time("F jS, o"); ?>"><?php the_time("F jS, o"); ?> at <?php the_time("g:i a"); ?></date></div>
 										</div>
 									</div>
 									<div class="row body">

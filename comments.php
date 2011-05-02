@@ -11,8 +11,8 @@
 		 * located in the functions.php file.
 		 *
 		 * @package WordPress
-		 * @subpackage Twenty_Ten
-		 * @since Twenty Ten 1.0
+		 * @subpackage showcase
+		 * @since Showcase 1.0
 		 */
 		?>
 
@@ -108,7 +108,9 @@
 				printf( _n( 'One Response to %2$s', '%1$s Responses to %2$s', get_comments_number(), 'showcase' ),
 				number_format_i18n( get_comments_number() ), get_the_title() );
 				?></h3>
-		<?php endif; ?>
+		<?php endif;
+		  // This first LI is supposed to be empty. It's for the preview.
+		?>
 			<ol id="comment-list" class="column">
 				<li id="li-comment-preview">
 					<article>
@@ -143,12 +145,12 @@
 		<?php endif; // check for comment navigation ?>
 										<?php
 							/* Loop through and list the comments. Tell wp_list_comments()
-							 * to use showcase_comment() to format the comments.
+							 * to use sc_comment() to format the comments.
 							 * If you want to overload this in a child theme then you can
 							 * define showcase_comment() and that will be used instead.
 							 * See showcase_comment() in showcase/functions.php for more.
 							 */
-							wp_list_comments( array( 'callback' => 'partial_comment' ) );
+							wp_list_comments( array( 'callback' => 'sc_comment' ) );
 						?>
 
 		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>

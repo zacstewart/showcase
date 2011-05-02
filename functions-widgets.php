@@ -12,48 +12,48 @@ class TweetWidget extends WP_Widget {
 
     /** @see WP_Widget::widget */
     function widget($args, $instance) {
-		extract( $args );
-		$title = apply_filters('widget_title', $instance['title']);
-		$username = apply_filters('widget_title', $instance['username']);
-		?>
-		<?php echo $before_widget; ?>
-		<?php if ( $title ) echo $before_title . $title . $after_title; ?>
-		<div id="sc-tweets" class="tweets">
-		</div>
-		<script language="Javascript">
-    function parseTwitterDate(text) {
-        var newtext = text.replace(/(\+\S+) (.*)/, '$2 $1')
-        var date = new Date(Date.parse(newtext)).toJSON();
-        date = date.substring(0, date.length-5);
-        date = date + "Z";
-        return date ;
-    }
-		$("#sc-tweets").hide();
-		jQuery.getJSON('http://twitter.com/statuses/user_timeline/<?php echo $username; ?>.json?count=3&callback=?', function( data ) {
-			$.each(data, function(i, item) {
+		  extract( $args );
+		  $title = apply_filters('widget_title', $instance['title']);
+		  $username = apply_filters('widget_title', $instance['username']);
+?>
+<?php echo $before_widget; ?>
+<?php if ( $title ) echo $before_title . $title . $after_title; ?>
+<div id="sc-tweets" class="tweets">
+</div>
+<script language="Javascript">
+function parseTwitterDate(text) {
+    var newtext = text.replace(/(\+\S+) (.*)/, '$2 $1')
+    var date = new Date(Date.parse(newtext)).toJSON();
+    date = date.substring(0, date.length-5);
+    date = date + "Z";
+    return date ;
+}
+$("#sc-tweets").hide();
+jQuery.getJSON('http://twitter.com/statuses/user_timeline/<?php echo $username; ?>.json?count=3&callback=?', function( data ) {
+	$.each(data, function(i, item) {
 
 
 
-				$("#sc-tweets").append('<article><div class="tweet"><div class="body"><a href="http://twitter.com/' + item.user.screen_name + '/status/' + item.id_str + '">'
-					+ item.text
-					+ '</a>'
-					+ '</div><div class="footer">'
-					+ prettyDate(parseTwitterDate(item.created_at))
-                                        //           2011-02-17T15:23:41Z
-					+ '</div></div></article>');
-			});
-			$("#sc-tweets").slideDown();
-		});
-		</script>
-		<?php echo $after_widget; ?>
-	<?php
+		$("#sc-tweets").append('<article><div class="tweet"><div class="body"><a href="http://twitter.com/' + item.user.screen_name + '/status/' + item.id_str + '">'
+			+ item.text
+			+ '</a>'
+			+ '</div><div class="footer">'
+			+ prettyDate(parseTwitterDate(item.created_at))
+      // + 2011-02-17T15:23:41Z
+			+ '</div></div></article>');
+	});
+	$("#sc-tweets").slideDown();
+});
+</script>
+<?php echo $after_widget; ?>
+<?php
     }
 
     /** @see WP_Widget::update */
     function update($new_instance, $old_instance) {
-		$instance = $old_instance;
-		$instance['title'] = strip_tags($new_instance['title']);
-		$instance['username'] = strip_tags($new_instance['username']);
+		  $instance = $old_instance;
+		  $instance['title'] = strip_tags($new_instance['title']);
+		  $instance['username'] = strip_tags($new_instance['username']);
 	    return $instance;
     }
 
@@ -62,10 +62,10 @@ class TweetWidget extends WP_Widget {
       foreach($instance as $key => $value) {
         $$key = esc_attr($value);
       }
-        ?>
-            <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo 'Title:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if ( isset( $title ) ) echo $title; ?>" /></label></p>
-            <p><label for="<?php echo $this->get_field_id('username'); ?>"><?php echo 'Twitter Username:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" name="<?php echo $this->get_field_name('username'); ?>" type="text" value="<?php if ( isset( $username ) ) echo $username; ?>" /></label></p>
-        <?php
+?>
+<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo 'Title:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if ( isset( $title ) ) echo $title; ?>" /></label></p>
+<p><label for="<?php echo $this->get_field_id('username'); ?>"><?php echo 'Twitter Username:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('username'); ?>" name="<?php echo $this->get_field_name('username'); ?>" type="text" value="<?php if ( isset( $username ) ) echo $username; ?>" /></label></p>
+<?php
     }
 
 } // class TweetWidget
@@ -81,18 +81,18 @@ class ShowcaseFollow extends WP_Widget {
 
 	/** @see WP_Widget::widget */
     function widget($args, $instance) {
-		extract( $args );
-		$title = apply_filters('widget_title', $instance['title']);
-		$en_facebook = $instance['en_facebook'];
-		$en_twitter = $instance['en_twitter'];
-		$en_feed = $instance['en_feed'];
-		$facebook = $instance['facebook'];
-		$twitter = $instance['twitter'];
-		if (!empty($instance['feed'])) {
-			$feed = $instance['feed'];
-		} else {
-			$feed = get_bloginfo('rss2_url');
-		}
+  		extract( $args );
+  		$title = apply_filters('widget_title', $instance['title']);
+  		$en_facebook = $instance['en_facebook'];
+  		$en_twitter = $instance['en_twitter'];
+  		$en_feed = $instance['en_feed'];
+  		$facebook = $instance['facebook'];
+  		$twitter = $instance['twitter'];
+  		if (!empty($instance['feed'])) {
+  			$feed = $instance['feed'];
+  		} else {
+  			$feed = get_bloginfo('rss2_url');
+  		}
 
 ?>
 <?php echo $before_widget; ?>
@@ -127,39 +127,28 @@ class ShowcaseFollow extends WP_Widget {
         foreach($instance as $key => $value) {
           $$key = esc_attr($value);
         }
-        ?>
-            <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo 'Title:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if ( isset( $title ) ) echo $title; ?>" /></label></p>
-            <p>
-				<input type="checkbox" id="<?php echo $this->get_field_id('en_facebook'); ?>" name="<?php echo $this->get_field_name('en_facebook'); ?>" title="Enable Facebook icon"<?php if ( isset( $en_facebook ) && $en_facebook ): ?> checked<?php endif;?>>
-				<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php echo 'Facebook page:'; ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('facebook'); ?>" name="<?php echo $this->get_field_name('facebook'); ?>" type="text" value="<?php if ( isset( $facebook ) ) echo $facebook; ?>" /></label>
-			</p>
-            <p>
-				<input type="checkbox" id="<?php echo $this->get_field_id('en_twitter'); ?>" name="<?php echo $this->get_field_name('en_twitter'); ?>" title="Enable Twitter icon"<?php if ( isset( $en_twitter ) && $en_twitter ): ?> checked<?php endif;?>>
-				<label for="<?php echo $this->get_field_id('twitter'); ?>"><?php echo 'Twitter username:'; ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('twitter'); ?>" name="<?php echo $this->get_field_name('twitter'); ?>" type="text" value="<?php if ( isset( $twitter ) ) echo $twitter; ?>" /></label>
-			</p>
-            <p>
-				<input type="checkbox" id="<?php echo $this->get_field_id('en_feed'); ?>" name="<?php echo $this->get_field_name('en_feed'); ?>" title="Enable Feed icon"<?php if ( isset( $en_feed ) && $en_feed ): ?> checked<?php endif;?>>
-				<label for="<?php echo $this->get_field_id('feed'); ?>"><?php echo 'Feed (leave empty for WP-generated RSS):'; ?>
-				<input class="widefat" id="<?php echo $this->get_field_id('feed'); ?>" name="<?php echo $this->get_field_name('feed'); ?>" type="text" value="<?php if ( isset( $feed ) ) echo $feed; ?>" /></label>
-			</p>
-        <?php
+?>
+<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php echo 'Title:'; ?> <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php if ( isset( $title ) ) echo $title; ?>" /></label></p>
+<p>
+	<input type="checkbox" id="<?php echo $this->get_field_id('en_facebook'); ?>" name="<?php echo $this->get_field_name('en_facebook'); ?>" title="Enable Facebook icon"<?php if ( isset( $en_facebook ) && $en_facebook ): ?> checked<?php endif;?>>
+	<label for="<?php echo $this->get_field_id('facebook'); ?>"><?php echo 'Facebook page:'; ?>
+	<input class="widefat" id="<?php echo $this->get_field_id('facebook'); ?>" name="<?php echo $this->get_field_name('facebook'); ?>" type="text" value="<?php if ( isset( $facebook ) ) echo $facebook; ?>" /></label>
+</p>
+<p>
+	<input type="checkbox" id="<?php echo $this->get_field_id('en_twitter'); ?>" name="<?php echo $this->get_field_name('en_twitter'); ?>" title="Enable Twitter icon"<?php if ( isset( $en_twitter ) && $en_twitter ): ?> checked<?php endif;?>>
+	<label for="<?php echo $this->get_field_id('twitter'); ?>"><?php echo 'Twitter username:'; ?>
+	<input class="widefat" id="<?php echo $this->get_field_id('twitter'); ?>" name="<?php echo $this->get_field_name('twitter'); ?>" type="text" value="<?php if ( isset( $twitter ) ) echo $twitter; ?>" /></label>
+</p>
+<p>
+	<input type="checkbox" id="<?php echo $this->get_field_id('en_feed'); ?>" name="<?php echo $this->get_field_name('en_feed'); ?>" title="Enable Feed icon"<?php if ( isset( $en_feed ) && $en_feed ): ?> checked<?php endif;?>>
+	<label for="<?php echo $this->get_field_id('feed'); ?>"><?php echo 'Feed (leave empty for WP-generated RSS):'; ?>
+	<input class="widefat" id="<?php echo $this->get_field_id('feed'); ?>" name="<?php echo $this->get_field_name('feed'); ?>" type="text" value="<?php if ( isset( $feed ) ) echo $feed; ?>" /></label>
+</p>
+<?php
     }
 
 } //class ShowcaseFollow
 
-// register TweetWidget widget
+// register Showcase widgets
 add_action('widgets_init', create_function('', 'return register_widget("TweetWidget");'));
 add_action('widgets_init', create_function('', 'return register_widget("ShowcaseFollow");'));
-
-function sc_enqueue_style($handle, $src, $conditions)
-{
-    global $wp_styles;
-    wp_enqueue_style($handle, $src);
-    if(isset($conditions)) {
-      $wp_styles->add_data($handle, 'conditional', $conditions);
-    }
-}
-
-?>
